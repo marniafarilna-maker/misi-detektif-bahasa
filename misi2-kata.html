@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi 2: Detektif Kata</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 30px 15px;
+    background-image: url("background-detektif.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.kotak {
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    background: rgba(220, 200, 250, 0.75);
+    border-radius: 20px;
+}
+
+h1 {
+    color: #7048b5;
+    font-size: 34px;
+}
+
+h2 {
+    color: #7048b5;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.nota-item {
+    text-align: left;
+    background: #f7f2ff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+}
+
+.nota-item h3 {
+    color: #7048b5;
+}
+
+button {
+    background: #8561db;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 20px;
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #6943c0;
+}
+
+button:disabled {
+    cursor: default;
+    opacity: 0.7;
+}
+
+#kuiz, #keputusan {
+    display: none;
+}
+
+.ayat {
+    background: #f3edff;
+    border-radius: 15px;
+    padding: 25px 15px;
+    margin: 20px 0;
+    font-size: 22px;
+    line-height: 2;
+}
+
+.ruang-kosong {
+    display: inline-block;
+    min-width: 105px;
+    min-height: 45px;
+    padding: 6px 12px;
+    margin: 4px;
+    background: white;
+    border: 2px dashed #8561db;
+    border-radius: 10px;
+    vertical-align: middle;
+    font-weight: bold;
+    color: #7048b5;
+}
+
+.ruang-kosong.terisi {
+    border-style: solid;
+}
+
+.ruang-kosong.betul {
+    border-color: #26995b;
+    background: #e2f8eb;
+}
+
+.ruang-kosong.salah {
+    border-color: #d9534f;
+    background: #ffe8e8;
+}
+
+.perkataan {
+    display: inline-block;
+    background: #e7d9ff;
+    color: #44257e;
+    border: 2px solid #b79aea;
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin: 8px;
+    cursor: grab;
+    font-size: 18px;
+    font-weight: bold;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.perkataan.dipilih {
+    background: #8561db;
+    color: white;
+}
+
+#maklumBalas {
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+#butangSeterusnya {
+    display: none;
+}
+/* WARNA PILIHAN JAWAPAN MISI 2 */
+
+#senaraiPilihan button {
+    background: #FADDE8;
+    color: #4A3040;
+    border: 2px solid #E9B4CA;
+    border-radius: 15px;
+}
+
+#senaraiPilihan button.betul {
+    background: #DFF7E8;
+    border: 2px solid #16A34A;
+    color: #166534;
+}
+
+#senaraiPilihan button.salah {
+    background: #FCE0E6;
+    border: 2px solid #EF4444;
+    color: #991B1B;
+}
+/* WARNA JAWAPAN MISI 2 */
+
+#ruangJawapan.betul {
+    background: #DFF7E8;
+    border: 2px solid #16A34A;
+    border-radius: 15px;
+}
+
+#ruangJawapan.salah {
+    background: #FCE0E6;
+    border: 2px solid #EF4444;
+    border-radius: 15px;
+}
+/* WARNA PINK UNTUK PILIHAN JAWAPAN */
+
+.perkataan {
+    background: #FADDE8;
+    color: #6B3050;
+    border: 2px solid #E9A8C0;
+    border-radius: 15px;
+}
+
+.perkataan:hover {
+    background: #F8C8DC;
+}
+</style>
+</head>
+
+<body>
+
+<div class="kotak">
+
+<h1>🔎 MISI 2: DETEKTIF KATA</h1>
+
+<p id="namaMurid"></p>
+
+<!-- NOTA PEMBELAJARAN -->
+<div id="nota">
+
+<h2>📚 Nota Pembelajaran</h2>
+
+<p>
+Kesalahan penggunaan kata berlaku apabila sesuatu
+perkataan digunakan secara tidak tepat mengikut
+fungsi dan peraturan tatabahasa bahasa Melayu.
+</p>
+
+<div class="nota-item">
+<h3>1. Kesalahan Kata Sendi Nama</h3>
+<p>❌ Salah: Saya pergi <b>di</b> sekolah.</p>
+<p>✅ Betul: Saya pergi <b>ke</b> sekolah.</p>
+<p>💡 <b>Sebab:</b> Kata sendi nama "ke" menunjukkan arah
+atau destinasi, manakala "di" menunjukkan lokasi.</p>
+</div>
+
+<div class="nota-item">
+<h3>2. Kesalahan Kata Pemeri</h3>
+<p>❌ Salah: Dia <b>adalah</b> guru.</p>
+<p>✅ Betul: Dia <b>ialah</b> guru.</p>
+<p>💡 <b>Sebab:</b> Kata pemeri "ialah" digunakan
+di hadapan frasa nama seperti "guru".</p>
+</div>
+
+<div class="nota-item">
+<h3>3. Kesalahan Kata Penguat</h3>
+<p>❌ Salah: Dia <b>paling tercantik</b>.</p>
+<p>✅ Betul: Dia <b>paling cantik</b>.</p>
+<p>💡 <b>Sebab:</b> Kata penguat "paling" tidak perlu
+digabungkan dengan awalan "ter-" yang menunjukkan
+darjah penghabisan.</p>
+</div>
+
+<button onclick="mulaKuiz()">MULAKAN MISI 🔍</button>
+
+</div>
+
+<!-- PERMAINAN -->
+<div id="kuiz">
+
+<h2>🕵️ Lengkapkan Ayat!</h2>
+
+<p>
+Seret atau tekan perkataan yang betul ke ruang kosong.
+
+</p>
+
+<p id="nomborSoalan"></p>
+
+<div class="ayat">
+<span id="ayatAwal"></span>
+<span
+    id="ruangJawapan"
+    class="ruang-kosong"
+    aria-label="Ruang jawapan"
+>______</span>
+<span id="ayatAkhir"></span>
+</div>
+
+<h3>🔎 Pilih perkataan yang tepat</h3>
+
+<div id="pilihanPerkataan"></div>
+
+<p id="maklumBalas"></p>
+
+<button id="butangSemak" onclick="semakJawapan()">
+SEMAK JAWAPAN 🔍
+</button>
+
+<button id="butangSeterusnya" onclick="soalanSeterusnya()">
+SOALAN SETERUSNYA ➡️
+</button>
+
+</div>
+
+<!-- KEPUTUSAN -->
+<div id="keputusan">
+
+<h2>🏆 MISI 2 SELESAI!</h2>
+
+<p id="markahAkhir"></p>
+
+<p id="mesejAkhir"></p>
+
+
+<button id="butangMisiSeterusnya"
+        onclick="window.location.href='misi3-ayat.html'"
+        style="display:none;">
+    MISI SETERUSNYA ➡️
+</button>
+
+<button id="butangCubaLagi"
+        onclick="ulangKuiz()"
+        style="display:none;">
+    🔄 CUBA LAGI
+</button>
+
+</div>
+
+</div>
+
+<script>
+const nama = sessionStorage.getItem("namaDetektif") || "Detektif";
+
+document.getElementById("namaMurid").textContent =
+    "Selamat datang, " + nama + "!";
+
+const soalan = [
+    {
+        awal: "Ali pergi",
+        akhir: "sekolah.",
+        pilihan: ["di", "ke", "dari"],
+        jawapan: "ke",
+        sebab: "Kata sendi nama 'ke' menunjukkan arah atau destinasi."
+    },
+    {
+        awal: "Ayah saya",
+        akhir: "seorang doktor.",
+        pilihan: ["adalah", "ialah", "paling"],
+        jawapan: "ialah",
+        sebab: "Kata pemeri 'ialah' digunakan di hadapan frasa nama seperti 'seorang doktor'."
+    },
+    {
+        awal: "Rumah itu",
+        akhir: "besar di kampung ini.",
+        pilihan: ["paling", "terlalu paling", "paling ter"],
+        jawapan: "paling",
+        sebab: "Kata penguat 'paling' sudah menunjukkan darjah penghabisan dan tidak perlu digabungkan dengan 'ter-'."
+    },
+    {
+        awal: "Majlis itu diadakan",
+        akhir: "hari Jumaat.",
+        pilihan: ["di", "pada", "ke"],
+        jawapan: "pada",
+        sebab: "Kata sendi nama 'pada' digunakan untuk menunjukkan masa seperti hari dan tarikh."
+    },
+    {
+        awal: "Bunga itu",
+        akhir: "cantik.",
+        pilihan: ["ialah", "adalah", "ke"],
+        jawapan: "adalah",
+        sebab: "Kata pemeri 'adalah' boleh digunakan di hadapan frasa adjektif seperti 'cantik'."
+    }
+];
+
+let indeks = 0;
+let markah = 0;
+let pilihanMurid = "";
+let sudahJawab = false;
+
+function bunyiJawapan(betul) {
+    mainNada(betul ? 880 : 250);
+}
+
+function mainNada(frekuensi) {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+    const oscillator = audio.createOscillator();
+    const volume = audio.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = frekuensi;
+
+    oscillator.connect(volume);
+    volume.connect(audio.destination);
+
+    volume.gain.setValueAtTime(0.12, audio.currentTime);
+    volume.gain.exponentialRampToValueAtTime(
+        0.001, audio.currentTime + 0.3
+    );
+
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.3);
+    oscillator.onended = () => audio.close();
+}
+
+function bunyiKemenangan() {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+
+    [523, 659, 784].forEach((frekuensi, i) => {
+        const oscillator = audio.createOscillator();
+        const volume = audio.createGain();
+
+        const mula = audio.currentTime + i * 0.22;
+        const tamat = mula + 0.3;
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frekuensi;
+
+        oscillator.connect(volume);
+        volume.connect(audio.destination);
+
+        volume.gain.setValueAtTime(0.12, mula);
+        volume.gain.exponentialRampToValueAtTime(0.001, tamat);
+
+        oscillator.start(mula);
+        oscillator.stop(tamat);
+    });
+
+    const penutup = audio.createOscillator();
+    penutup.connect(audio.destination);
+    penutup.onended = () => audio.close();
+    penutup.start(audio.currentTime + 0.8);
+    penutup.stop(audio.currentTime + 0.81);
+}
+
+function mulaKuiz() {
+    document.getElementById("nota").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+
+function paparSoalan() {
+    sudahJawab = false;
+    pilihanMurid = "";
+
+    const item = soalan[indeks];
+
+    document.getElementById("nomborSoalan").textContent =
+        "Soalan " + (indeks + 1) + " daripada " + soalan.length;
+
+    document.getElementById("ayatAwal").textContent = item.awal + " ";
+    document.getElementById("ayatAkhir").textContent = " " + item.akhir;
+
+    const ruang = document.getElementById("ruangJawapan");
+
+    ruang.textContent = "______";
+    ruang.className = "ruang-kosong";
+
+    ruang.ondragover = function(event) {
+        event.preventDefault();
+    };
+
+    ruang.ondrop = function(event) {
+        event.preventDefault();
+
+        if (sudahJawab) return;
+
+        const perkataan = event.dataTransfer.getData("text/plain");
+        pilihPerkataan(perkataan);
+    };
+
+    document.getElementById("maklumBalas").textContent = "";
+    document.getElementById("butangSemak").style.display = "inline-block";
+    document.getElementById("butangSeterusnya").style.display = "none";
+
+    const bekas = document.getElementById("pilihanPerkataan");
+    bekas.innerHTML = "";
+
+    item.pilihan.forEach(perkataan => {
+        const kad = document.createElement("div");
+
+        kad.className = "perkataan";
+        kad.textContent = perkataan;
+        kad.draggable = true;
+        kad.tabIndex = 0;
+        kad.setAttribute("role", "button");
+
+        kad.ondragstart = function(event) {
+            event.dataTransfer.setData("text/plain", perkataan);
+        };
+
+        kad.onclick = function() {
+            pilihPerkataan(perkataan);
+        };
+
+        kad.onkeydown = function(event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                pilihPerkataan(perkataan);
+            }
+        };
+
+        bekas.appendChild(kad);
+    });
+}
+
+function pilihPerkataan(perkataan) {
+    if (sudahJawab) return;
+
+    const item = soalan[indeks];
+
+    if (!item.pilihan.includes(perkataan)) return;
+
+    pilihanMurid = perkataan;
+
+    const ruang = document.getElementById("ruangJawapan");
+    ruang.textContent = perkataan;
+    ruang.className = "ruang-kosong terisi";
+
+    document.querySelectorAll(".perkataan").forEach(kad => {
+        kad.classList.toggle(
+            "dipilih",
+            kad.textContent === perkataan
+        );
+    });
+}
+
+function semakJawapan() {
+    if (sudahJawab) return;
+
+    if (!pilihanMurid) {
+        document.getElementById("maklumBalas").textContent =
+            "⚠️ Pilih atau seret satu perkataan dahulu!";
+        return;
+    }
+
+    sudahJawab = true;
+
+    const item = soalan[indeks];
+    const betul = pilihanMurid === item.jawapan;
+
+    bunyiJawapan(betul);
+
+    const ruang = document.getElementById("ruangJawapan");
+    const maklumBalas = document.getElementById("maklumBalas");
+
+    if (betul) {
+        markah++;
+        ruang.classList.add("betul");
+
+        maklumBalas.innerHTML =
+            "✅ <b>TAHNIAH! Jawapan betul!</b><br><br>" +
+            "💡 <b>Sebab:</b> " + item.sebab;
+    } else {
+        ruang.classList.add("salah");
+
+        maklumBalas.innerHTML =
+            "❌ <b>Jawapan kurang tepat.</b><br><br>" +
+            "✅ <b>Jawapan betul:</b> " + item.jawapan +
+            "<br><br>💡 <b>Sebab:</b> " + item.sebab;
+    }
+
+    document.getElementById("butangSemak").style.display = "none";
+
+    const butang = document.getElementById("butangSeterusnya");
+    butang.textContent =
+        indeks === soalan.length - 1
+            ? "LIHAT KEPUTUSAN 🏆"
+            : "SOALAN SETERUSNYA ➡️";
+
+    butang.style.display = "inline-block";
+}
+
+function soalanSeterusnya() {
+    indeks++;
+
+    if (indeks < soalan.length) {
+        paparSoalan();
+    } else {
+        tamatKuiz();
+    }
+}
+
+
+function tamatKuiz() {
+    document.getElementById("kuiz").style.display = "none";
+    document.getElementById("keputusan").style.display = "block";
+
+    document.getElementById("markahAkhir").textContent =
+        nama + ", markah anda ialah " +
+        markah + " daripada " + soalan.length + ".";
+
+    const butangSeterusnya =
+        document.getElementById("butangMisiSeterusnya");
+
+    const butangCubaLagi =
+        document.getElementById("butangCubaLagi");
+
+    if (markah === soalan.length) {
+        bunyiKemenangan();
+
+        document.getElementById("mesejAkhir").textContent =
+            "🌟 Tahniah! Semua jawapan betul! Anda layak ke Misi 3!";
+
+        butangSeterusnya.style.display = "inline-block";
+        butangCubaLagi.style.display = "none";
+
+    } else {
+        document.getElementById("mesejAkhir").textContent =
+            "💪 Cuba lagi! Dapatkan markah penuh untuk membuka Misi 3.";
+
+        butangSeterusnya.style.display = "none";
+        butangCubaLagi.style.display = "inline-block";
+    }
+}
+
+
+function ulangKuiz() {
+    document.getElementById("keputusan").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+</script>
+
+</body>
+</html>

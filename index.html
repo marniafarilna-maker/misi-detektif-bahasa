@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Detektif Bahasa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+background-image: url("muka-depan-baru.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+min-height: 100vh;
+      text-align: center;
+      margin: 0;
+      padding: 50px 20px;
+    }
+
+    .kotak {
+      display: none;
+      background: transparent;
+      max-width: 550px;
+      margin: auto;
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px #0002;
+    }
+
+    h1 { color: #6546a6; }
+
+    button {
+      background: #8064d8;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover { background: #6243bd; }
+    .butang-canva {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.butang-canva button {
+    position: absolute;
+    left: 43%;
+    width: 20%;
+    height: 8%;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.cara-canva {
+    top: 79%;
+}
+
+.mula-canva {
+    top: 89%;
+}
+
+/* KEDUDUKAN KARTUN DETEKTIF */
+
+.detektif-perempuan {
+    position: fixed;
+    width: 65%;
+    left: -5%;
+    bottom: -2%;
+    z-index: 2;
+    pointer-events: none;
+    animation: gerakPerempuan 3s ease-in-out infinite;
+}
+
+.detektif-lelaki {
+    position: fixed;
+    width: 70%;
+    right: -5%;
+    bottom: -2%;
+    z-index: 2;
+    pointer-events: none;
+    animation: gerakLelaki 3.5s ease-in-out infinite;
+}
+
+/* DETEKTIF PEREMPUAN MENYIASAT */
+@keyframes gerakPerempuan {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-12px) rotate(-3deg);
+    }
+}
+
+/* DETEKTIF LELAKI BERFIKIR */
+@keyframes gerakLelaki {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(4deg);
+    }
+}
+
+  </style>
+</head>
+<body>
+  
+<img src="detektif-perempuan.png" class="detektif-perempuan" alt="Detektif perempuan">
+
+<img src="detektif-lelaki.png" class="detektif-lelaki" alt="Detektif lelaki">
+
+    <div class="butang-canva">
+  <button class="cara-canva" onclick="cara()" aria-label="Cara Bermain"></button>
+  <button class="mula-canva" onclick="mula()" aria-label="Mula Bermain"></button>
+</div>
+  <script>
+    function mula() {
+    window.location.href = "mula-bermain.html";
+}
+
+  function cara() {
+    window.location.href = "cara-bermain.html";
+}
+  </script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi 1 - Detektif Ejaan</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-image: url("background-detektif.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+    text-align: center;
+    padding: 25px 15px;
+    margin: 0;
+}
+.kotak {
+    max-width: 650px;
+    margin: 20px auto;
+background: rgba(230, 215, 250, 0.90);  
+    padding: 25px;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px #0002;
+}
+h1 { color: #6744a5; }
+.pilihan {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    background: #eee7ff;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 17px;
+}
+.pilihan:hover { background: #d8c8ff; }
+.pilihan:disabled { cursor: default; }
+.betul { background: #c9f2d5; border-color: green; }
+.salah { background: #ffd4d4; border-color: red; }
+#maklumBalas {
+    font-weight: bold;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+.butang {
+    padding: 13px 24px;
+    background: #8064d8;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 8px;
+}
+
+.kotak-contoh {
+    background: rgba(255, 255, 255, 0.75);
+    border: 2px solid #b69ae8;
+    border-radius: 20px;
+    padding: 15px 25px;
+    max-width: 480px;
+    margin: 20px auto;
+    box-shadow: 0 4px 12px rgba(90, 60, 150, 0.12);
+}
+
+.kotak-contoh p {
+    font-size: 20px;
+    margin: 12px 0;
+    line-height: 1.5;
+}
+
+#senaraiPilihan button {
+    background: #FADDE8;
+    color: #4A3040;
+    border: 2px solid #E9B4CA;
+    border-radius: 15px;
+}
+
+#senaraiPilihan button:hover {
+    background: #F5C4D8;
+}
+
+/* Jawapan yang betul */
+#senaraiPilihan button.betul {
+    background: #DFF7E8;
+    border: 2px solid #16A34A;
+    color: #166534;
+}
+
+/* Jawapan salah yang dipilih */
+#senaraiPilihan button.salah {
+    background: #FFE0E5;
+    border: 2px solid #EF4444;
+    color: #991B1B;
+}
+
+</style>
+</head>
+<body>
+
+<div class="kotak">
+    <h1>🔎 MISI 1: DETEKTIF EJAAN</h1>
+    <p id="namaMurid"></p>
+
+    <div id="nota">
+        <h2>📚 Nota Pembelajaran</h2>
+        <p>Kesalahan ejaan kata berlaku apabila sesuatu perkataan dieja tidak mengikut sistem ejaan Rumi bahasa Melayu yang standard seperti yang ditetapkan oleh Dewan Bahasa dan Pustaka (DBP). .</p>
+        
+<div class="kotak-contoh">
+    <p><strong>📝 Contoh Kesalahan Ejaan</strong></p>
+
+    <p>❌ Masaalah → ✅ Masalah</p>
+    <p>❌ Kelinik → ✅ Klinik</p>
+    <p>❌ Tengahari → ✅ Tengah hari</p>
+</div>
+
+        <button class="butang" onclick="mulaSoalan()">
+            MULAKAN SOALAN
+        </button>
+    </div>
+
+    <div id="kuiz" hidden>
+        <h3 id="nomborSoalan"></h3>
+        <h2 id="teksSoalan"></h2>
+        <div id="senaraiPilihan"></div>
+        <p id="maklumBalas" aria-live="polite"></p>
+        <button id="seterusnya" class="butang"
+                onclick="soalanSeterusnya()" hidden>
+            SOALAN SETERUSNYA
+        </button>
+    </div>
+
+    <div id="keputusan" hidden>
+        <h2>🏆 Misi 1 Selesai!</h2>
+        <h3 id="jumlahMarkah"></h3>
+        <p>Syabas kerana berjaya menyelesaikan Misi Ejaan!</p>
+        
+<button id="butangMisiSeterusnya"
+        class="butang"
+        onclick="window.location.href='misi2-kata.html'"
+        hidden>
+    MISI SETERUSNYA ➡️
+</button>
+
+<button id="butangCubaLagi"
+        class="butang"
+        onclick="location.reload()"
+        hidden>
+    🔄 CUBA LAGI
+</button>
+
+    </div>
+</div>
+
+<script>
+const nama = sessionStorage.getItem("namaDetektif") || "Detektif";
+document.getElementById("namaMurid").textContent =
+    "Selamat datang, " + nama + "!";
+    
+const soalan = [
+    {
+        tanya: "Pilih ejaan yang betul.",
+        pilihan: ["Aktibiti", "Aktiviti", "Aktivety"],
+        jawapan: 1,
+        sebab: "Ejaan yang betul ialah aktiviti, bukan aktibiti."
+    },
+    {
+        tanya: "Pilih ejaan yang betul.",
+        pilihan: ["Kereta api", "Keretapi", "Kereta-api"],
+        jawapan: 0,
+        sebab: "Kereta api ialah kata majmuk yang dieja terpisah."
+    },
+    {
+        tanya: "Pilih ejaan yang betul.",
+        pilihan: ["Ibubapa", "Ibu-bapa", "Ibu bapa"],
+        jawapan: 2,
+        sebab: "Ibu bapa dieja sebagai dua perkataan."
+    },
+    {
+        tanya: "Pilih ejaan yang betul.",
+        pilihan: ["Tanggungjawab", "Tanggung jawab", "Tanggung-jawab"],
+        jawapan: 0,
+        sebab: "Tanggungjawab ialah kata majmuk mantap yang dieja rapat."
+    },
+    {
+        tanya: "Pilih ejaan yang betul.",
+        pilihan: ["Antarabangsa", "Antara bangsa", "Antara-bangsa"],
+        jawapan: 0,
+        sebab: "Antarabangsa dieja rapat sebagai satu perkataan."
+    }
+];
+
+
+let indeks = 0;
+let markah = 0;
+let sudahJawab = false;
+
+function mulaSoalan() {
+    document.getElementById("nota").hidden = true;
+    document.getElementById("kuiz").hidden = false;
+    paparSoalan();
+}
+
+function paparSoalan() {
+    sudahJawab = false;
+    const item = soalan[indeks];
+    document.getElementById("nomborSoalan").textContent =
+        "Soalan " + (indeks + 1) + " daripada " + soalan.length;
+    document.getElementById("teksSoalan").textContent = item.tanya;
+    document.getElementById("maklumBalas").textContent = "";
+    document.getElementById("seterusnya").hidden = true;
+
+    const tempat = document.getElementById("senaraiPilihan");
+    tempat.innerHTML = "";
+
+    item.pilihan.forEach((pilihan, i) => {
+        const butang = document.createElement("button");
+        butang.className = "pilihan";
+        butang.textContent = pilihan;
+        butang.onclick = () => semakJawapan(i);
+        tempat.appendChild(butang);
+    });
+}
+function bunyiJawapan(betul) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audio = new AudioContext();
+    const oscillator = audio.createOscillator();
+    const volume = audio.createGain();
+
+    oscillator.connect(volume);
+    volume.connect(audio.destination);
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = betul ? 880 : 250;
+
+    volume.gain.setValueAtTime(0.15, audio.currentTime);
+    volume.gain.exponentialRampToValueAtTime(
+        0.001, audio.currentTime + 0.3
+    );
+
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.3);
+    oscillator.onended = () => audio.close();
+}
+
+function bunyiKemenangan() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audio = new AudioContext();
+
+    const nada = [523, 659, 784];
+
+    nada.forEach((frekuensi, i) => {
+        const oscillator = audio.createOscillator();
+        const volume = audio.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frekuensi;
+
+        oscillator.connect(volume);
+        volume.connect(audio.destination);
+
+        const mula = audio.currentTime + i * 0.22;
+        const tamat = mula + 0.3;
+
+        volume.gain.setValueAtTime(0.12, mula);
+        volume.gain.exponentialRampToValueAtTime(0.001, tamat);
+
+        oscillator.start(mula);
+        oscillator.stop(tamat);
+    });
+
+    setTimeout(() => audio.close(), 1200);
+}
+
+function semakJawapan(pilihan) {
+    if (sudahJawab) return;
+    sudahJawab = true;
+
+    const item = soalan[indeks];
+    bunyiJawapan(pilihan === item.jawapan);
+    const semuaButang = document.querySelectorAll(".pilihan");
+
+    semuaButang.forEach((butang, i) => {
+        butang.disabled = true;
+        if (i === item.jawapan) butang.classList.add("betul");
+        if (i === pilihan && i !== item.jawapan) {
+            butang.classList.add("salah");
+        }
+    });
+
+    if (pilihan === item.jawapan) {
+        markah++;
+        document.getElementById("maklumBalas").textContent =
+            "✅ Betul! " + item.sebab;
+    } else {
+        document.getElementById("maklumBalas").textContent =
+            "❌ Belum tepat. Jawapan yang betul ialah " +
+            item.pilihan[item.jawapan] + ". " + item.sebab;
+    }
+
+    const butangSeterusnya = document.getElementById("seterusnya");
+    butangSeterusnya.hidden = false;
+    butangSeterusnya.textContent =
+        indeks === soalan.length - 1
+        ? "LIHAT KEPUTUSAN"
+        : "SOALAN SETERUSNYA";
+}
+
+function soalanSeterusnya() {
+    indeks++;
+
+    if (indeks < soalan.length) {
+        paparSoalan();
+    } else {
+        document.getElementById("kuiz").hidden = true;
+        document.getElementById("keputusan").hidden = false;
+        document.getElementById("jumlahMarkah").textContent =
+            "Markah anda: " + markah + " / " + soalan.length;
+        sessionStorage.setItem("markahMisi1", markah);
+        
+if (markah === soalan.length) {
+    
+if (markah === soalan.length) {
+    bunyiKemenangan();
+
+    document.getElementById("butangMisiSeterusnya").hidden = false;
+    document.getElementById("butangCubaLagi").hidden = true;
+} else {
+    document.getElementById("butangMisiSeterusnya").hidden = true;
+    document.getElementById("butangCubaLagi").hidden = false;
+}
+
+    document.getElementById("butangMisiSeterusnya").hidden = false;
+    document.getElementById("butangCubaLagi").hidden = true;
+} else {
+    document.getElementById("butangMisiSeterusnya").hidden = true;
+    document.getElementById("butangCubaLagi").hidden = false;
+}
+
+    }
+}
+</script>
+</body>
+</html>

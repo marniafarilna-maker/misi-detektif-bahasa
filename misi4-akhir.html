@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi 4 - Cabaran Detektif Terakhir</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px 15px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url("background-detektif.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.kotak {
+    max-width: 650px;
+    margin: auto;
+    padding: 30px;
+    border-radius: 22px;
+background: rgba(220, 200, 255, 0.75);}
+
+h1 {
+    font-size: 33px;
+    color: #7048b5;
+}
+
+h2, h3 {
+    color: #7048b5;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+button {
+    padding: 14px 22px;
+    margin: 8px;
+    border: none;
+    border-radius: 12px;
+    background: #8561db;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #6943c0;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+#kuiz,
+#keputusan,
+#paparanKemenangan,
+#paparanCubaLagi,
+#sijil,
+#butangSeterusnya {
+    display: none;
+}
+
+.panduan {
+    background: #f7f2ff;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: left;
+    margin: 20px 0;
+}
+
+.ayat-misteri {
+    background: #f3edff;
+    border: 2px dashed #aa8ce7;
+    border-radius: 15px;
+    padding: 25px 15px;
+    margin: 20px 0;
+    font-size: 21px;
+    line-height: 1.7;
+}
+
+.ayat-misteri strong {
+    color: #7b35bd;
+    text-decoration: underline;
+}
+
+input {
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    border: 2px solid #b79aea;
+    border-radius: 12px;
+    font-size: 17px;
+    text-align: center;
+}
+
+input:focus {
+    outline: 2px solid #8561db;
+}
+
+#maklumBalas {
+    margin: 20px 0;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.gelaran {
+    background: #34318c;
+    border: 2px solid #e9b52d;
+    border-radius: 20px;
+    padding: 28px 15px;
+    margin: 25px auto;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.gelaran p {
+    color: #d5d0ff;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.gelaran h2 {
+    color: white;
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+.ucapan {
+    color: #424b62;
+    font-size: 18px;
+    margin: 30px auto;
+}
+
+.butangSijil {
+    background: #eb8c00;
+    font-size: 21px;
+    font-weight: bold;
+    padding: 18px 35px;
+    border-radius: 17px;
+    box-shadow: 0 5px 0 #ad6000;
+}
+
+.butangSijil:hover {
+    background: #d67c00;
+}
+
+/* REKA BENTUK SIJIL */
+
+.sijil {
+    margin-top: 20px;
+}
+
+.bingkaiSijil {
+    background: #fffdf6;
+    border: 5px double #d6a83c;
+    border-radius: 14px;
+    padding: 30px 20px;
+    color: #514b57;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.hiasanAtas {
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.labelSijil {
+    font-size: 12px;
+    font-weight: bold;
+    color: #44348d;
+    letter-spacing: 2px;
+}
+
+.tajukSijil {
+    font-size: 30px;
+    color: #34318c;
+    margin: 15px 0 25px;
+}
+
+.namaPenerima {
+    color: #a87617;
+    font-family: Georgia, serif;
+    font-size: 32px;
+    margin: 20px 0;
+    overflow-wrap: anywhere;
+}
+
+.garisanEmas {
+    width: 75%;
+    height: 2px;
+    background: #d6a83c;
+    margin: 20px auto;
+}
+
+.namaPermainan {
+    color: #34318c;
+    font-size: 23px;
+}
+
+.gelaranSijil {
+    background: #34318c;
+    color: white;
+    border-radius: 12px;
+    padding: 18px 12px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.gelaranSijil p {
+    color: #e4d8ff;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.bahagianBawah {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 10px;
+    margin-top: 35px;
+}
+
+.bahagianBawah > div {
+    flex: 1;
+    min-width: 0;
+}
+
+.bahagianBawah b {
+    color: #34318c;
+    font-size: 12px;
+}
+
+.bahagianBawah p {
+    font-size: 11px;
+}
+
+.copSijil {
+    font-size: 45px;
+}
+
+.butangCetak {
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .kotak {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .gelaran h2 {
+        font-size: 22px;
+    }
+
+    .namaPenerima {
+        font-size: 25px;
+    }
+}
+
+/* CETAK SIJIL SAHAJA */
+@media print {
+    @page {
+        size: A4 landscape;
+        margin: 12mm;
+    }
+
+    body {
+        background: white !important;
+        padding: 0;
+    }
+
+    .kotak {
+        max-width: none;
+        width: 100%;
+        padding: 0;
+        background: white;
+    }
+
+    .kotak > h1,
+    #namaMurid,
+    #nota,
+    #kuiz,
+    #paparanKemenangan,
+    #paparanCubaLagi,
+    .butangCetak {
+        display: none !important;
+    }
+
+    #keputusan,
+    #sijil {
+        display: block !important;
+    }
+
+    .bingkaiSijil {
+        box-shadow: none;
+        min-height: 170mm;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        break-inside: avoid;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    .bahagianBawah {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="kotak">
+
+<h1>🔎 MISI 4: CABARAN TERAKHIR</h1>
+
+<p id="namaMurid"></p>
+
+<!-- PENGENALAN -->
+<div id="nota">
+
+    <h2>🏆 Cabaran Detektif Bahasa</h2>
+
+    <p>
+        Tahniah kerana berjaya sampai ke misi terakhir!
+        Selesaikan lima kes bahasa untuk memperoleh
+        gelaran Master Detektif Bahasa.
+    </p>
+
+    <div class="panduan">
+        <h3>📚 Cara Bermain</h3>
+
+        <p>1. Baca ayat misteri dengan teliti.</p>
+        <p>2. Kenal pasti kesalahan bahasa.</p>
+        <p>3. Taip perkataan yang betul atau ayat penuh yang telah dibetulkan.</p>
+        <p>4. Tekan SEMAK JAWAPAN.</p>
+        <p>5. Dapatkan 5/5 untuk membuka sijil pencapaian.</p>
+    </div>
+
+    <button onclick="mulaKuiz()">
+        MULAKAN CABARAN 🔍
+    </button>
+
+</div>
+
+<!-- PERMAINAN -->
+<div id="kuiz">
+
+    <h2>🕵️ Selesaikan Kes Bahasa!</h2>
+
+    <p id="nomborSoalan"></p>
+
+    <p id="arahanSoalan"></p>
+
+    <div id="ayatMisteri" class="ayat-misteri"></div>
+
+    <p><b>✏️ Taip pembetulan:</b></p>
+
+    <input
+        id="jawapanMurid"
+        type="text"
+        placeholder="Taip jawapan di sini..."
+        autocomplete="off"
+    >
+
+    <br>
+
+    <button id="butangSemak" onclick="semakJawapan()">
+        SEMAK JAWAPAN 🔍
+    </button>
+
+    <div id="maklumBalas" aria-live="polite"></div>
+
+    <button id="butangSeterusnya"
+            onclick="soalanSeterusnya()">
+        CABARAN SETERUSNYA ➡️
+    </button>
+
+</div>
+
+<!-- KEPUTUSAN -->
+<div id="keputusan">
+
+    <!-- PAPARAN KEMENANGAN -->
+    <div id="paparanKemenangan">
+
+        <h2>🎉 TAHNIAH, DETEKTIF!</h2>
+
+        <h3 id="markahAkhir"></h3>
+
+        <div class="gelaran">
+            <p>PENCAPAIAN / GELARAN</p>
+            <h2>🏆 MASTER DETEKTIF BAHASA</h2>
+        </div>
+
+        <p class="ucapan">
+            Syabas kerana berjaya menyelesaikan semua kes
+            dan membuktikan kepakaran anda dalam
+            Bahasa Melayu!
+        </p>
+
+        <button class="butangSijil" onclick="lihatSijil()">
+            ✹ LIHAT SIJIL
+        </button>
+
+    </div>
+
+    <!-- PAPARAN CUBA LAGI -->
+    <div id="paparanCubaLagi">
+
+        <h2>💪 CUBA LAGI, DETEKTIF!</h2>
+
+        <h3 id="markahGagal"></h3>
+
+        <p>
+            Dapatkan markah penuh 5/5 untuk memperoleh
+            gelaran Master Detektif Bahasa.
+        </p>
+
+        <button onclick="ulangKuiz()">
+            🔄 CUBA LAGI
+        </button>
+
+    </div>
+
+    <!-- SIJIL -->
+    <div id="sijil" class="sijil">
+
+        <div class="bingkaiSijil">
+
+            <div class="hiasanAtas">🏅 ✦ 🏆 ✦ 🏅</div>
+
+            <p class="labelSijil">
+                ANUGERAH KECEMERLANGAN BAHASA
+            </p>
+
+            <h1 class="tajukSijil">
+                SIJIL PENCAPAIAN
+            </h1>
+
+            <p>
+                Dengan penuh penghargaan,
+                sijil ini dianugerahkan kepada
+            </p>
+
+            <h2 id="namaSijil" class="namaPenerima"></h2>
+
+            <div class="garisanEmas"></div>
+
+            <p>
+                atas kejayaan menyelesaikan keempat-empat misi
+                dalam permainan
+            </p>
+
+            <h2 class="namaPermainan">
+                MISI DETEKTIF BAHASA
+            </h2>
+
+            <div class="gelaranSijil">
+                🏆 MASTER DETEKTIF BAHASA
+                <p>PENCAPAIAN CEMERLANG · 5/5</p>
+            </div>
+
+            <p>
+                Semoga kejayaan ini menjadi inspirasi untuk
+                terus memartabatkan bahasa Melayu.
+            </p>
+
+            <div class="bahagianBawah">
+
+                <div>
+                    <b id="tarikhSijil"></b>
+                    <p>Tarikh Pencapaian</p>
+                </div>
+
+                <div class="copSijil">🏆</div>
+
+                <div>
+                    <b>DETEKTIF BAHASA HEBAT</b>
+                    <p>Pengiktirafan</p>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="butangCetak">
+
+            <button onclick="window.print()">
+                🖨️ CETAK / SIMPAN PDF
+            </button>
+
+            <button onclick="kembaliKeputusan()">
+                ⬅️ KEMBALI
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+// NAMA PEMAIN DIAMBIL DARIPADA HALAMAN MULA BERMAIN
+const nama =
+    sessionStorage.getItem("namaDetektif") || "Detektif";
+
+document.getElementById("namaMurid").textContent =
+    "Selamat datang, " + nama + "!";
+
+
+// LIMA CABARAN
+const soalan = [
+    {
+        kategori: "Kesalahan Ejaan",
+        arahan: "Betulkan ejaan perkataan yang ditandakan.",
+        ayat: "Kakak menyertai pertandingan <strong>olahraga</strong> di sekolah.",
+        jawapan: "olahraga",
+        ayatBetul: "Kakak menyertai pertandingan olahraga di sekolah.",
+        sebab: "Perkataan 'olahraga' ialah ejaan yang betul."
+    },
+    {
+        kategori: "Kesalahan Ejaan",
+        arahan: "Betulkan ejaan kata majmuk yang ditandakan.",
+        ayat: "Kami membeli <strong>alatulis</strong> di kedai buku.",
+        jawapan: "alat tulis",
+        ayatBetul: "Kami membeli alat tulis di kedai buku.",
+        sebab: "Kata majmuk 'alat tulis' dieja terpisah kerana bukan kata majmuk mantap."
+    },
+    {
+        kategori: "Kesalahan Kata",
+        arahan: "Gantikan kata sendi nama yang salah.",
+        ayat: "Hadiah itu diberikan <strong>pada</strong> ibu.",
+        jawapan: "kepada",
+        ayatBetul: "Hadiah itu diberikan kepada ibu.",
+        sebab: "Kata sendi nama 'kepada' digunakan untuk menunjukkan penerima, iaitu ibu."
+    },
+    {
+        kategori: "Kesalahan Kata Penguat",
+        arahan: "Betulkan penggunaan kata penguat dalam ayat.",
+        ayat: "Rumah itu <strong>sangat terbesar</strong> di kampung.",
+        jawapan: "paling besar",
+        ayatBetul: "Rumah itu paling besar di kampung.",
+        sebab: "Kata penguat 'sangat' tidak digunakan bersama-sama bentuk kata adjektif berawalan 'ter-' yang sudah membawa maksud darjah paling tinggi."
+    },
+    {
+        kategori: "Kesalahan Ayat",
+        arahan: "Taip semula ayat berikut supaya gramatis.",
+        ayat: "<strong>Baju itu telah dijahit oleh saya.</strong>",
+        jawapan: "Baju itu telah saya jahit.",
+        ayatBetul: "Baju itu telah saya jahit.",
+        sebab: "Dalam ayat pasif dengan kata ganti nama diri pertama, kata ganti nama 'saya' hadir sebelum kata kerja tanpa awalan 'di-'."
+    }
+];
+
+
+let indeks = 0;
+let markah = 0;
+let sudahJawab = false;
+
+
+// BUNYI JAWAPAN
+function bunyiJawapan(betul) {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+    const oscillator = audio.createOscillator();
+    const volume = audio.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = betul ? 880 : 250;
+
+    oscillator.connect(volume);
+    volume.connect(audio.destination);
+
+    volume.gain.setValueAtTime(0.12, audio.currentTime);
+
+    volume.gain.exponentialRampToValueAtTime(
+        0.001,
+        audio.currentTime + 0.3
+    );
+
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.3);
+
+    oscillator.onended = () => audio.close();
+}
+
+
+// BUNYI KEMENANGAN
+function bunyiKemenangan() {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+
+    [523, 659, 784].forEach((frekuensi, i) => {
+        const oscillator = audio.createOscillator();
+        const volume = audio.createGain();
+
+        const mula = audio.currentTime + i * 0.22;
+        const tamat = mula + 0.3;
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frekuensi;
+
+        oscillator.connect(volume);
+        volume.connect(audio.destination);
+
+        volume.gain.setValueAtTime(0.12, mula);
+
+        volume.gain.exponentialRampToValueAtTime(
+            0.001,
+            tamat
+        );
+
+        oscillator.start(mula);
+        oscillator.stop(tamat);
+    });
+
+    const penutup = audio.createOscillator();
+    penutup.connect(audio.destination);
+
+    penutup.onended = () => audio.close();
+    penutup.start(audio.currentTime + 0.8);
+    penutup.stop(audio.currentTime + 0.81);
+}
+
+
+// MULAKAN CABARAN
+function mulaKuiz() {
+    document.getElementById("nota").style.display = "none";
+    document.getElementById("keputusan").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+
+
+// PAPAR SOALAN
+function paparSoalan() {
+    sudahJawab = false;
+
+    const item = soalan[indeks];
+
+    document.getElementById("nomborSoalan").textContent =
+        "Cabaran " + (indeks + 1) +
+        " daripada " + soalan.length +
+        " — " + item.kategori;
+
+    document.getElementById("arahanSoalan").textContent =
+        item.arahan;
+
+    document.getElementById("ayatMisteri").innerHTML =
+        item.ayat;
+
+    const input =
+        document.getElementById("jawapanMurid");
+
+    input.value = "";
+    input.disabled = false;
+    input.focus();
+
+    document.getElementById("maklumBalas").textContent = "";
+
+    document.getElementById("butangSemak").style.display =
+        "inline-block";
+
+    document.getElementById("butangSeterusnya").style.display =
+        "none";
+}
+
+
+// SAMAKAN HURUF DAN JARAK
+function kemaskanJawapan(teks) {
+    return teks
+        .trim()
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+}
+
+
+// SEMAK JAWAPAN
+function semakJawapan() {
+    if (sudahJawab) return;
+
+    const input =
+        document.getElementById("jawapanMurid");
+
+    const jawapanMurid = kemaskanJawapan(input.value);
+
+    if (!jawapanMurid) {
+        document.getElementById("maklumBalas").textContent =
+            "⚠️ Sila taip jawapan dahulu!";
+        return;
+    }
+
+    sudahJawab = true;
+
+    const item = soalan[indeks];
+
+    // TERIMA PERKATAAN BETUL ATAU AYAT PENUH BETUL
+    const jawapanDiterima = [
+        kemaskanJawapan(item.jawapan),
+        kemaskanJawapan(item.ayatBetul)
+    ];
+
+    const betul = jawapanDiterima.includes(jawapanMurid);
+
+    bunyiJawapan(betul);
+
+    const maklumBalas =
+        document.getElementById("maklumBalas");
+
+    if (betul) {
+        markah++;
+
+        maklumBalas.innerHTML =
+            "✅ <b>TAHNIAH! Jawapan betul!</b>" +
+            "<br><br>💡 <b>Sebab:</b> " + item.sebab;
+
+    } else {
+        maklumBalas.innerHTML =
+            "❌ <b>Jawapan kurang tepat.</b>" +
+            "<br><br>✅ <b>Jawapan betul:</b> " +
+            item.ayatBetul +
+            "<br><br>💡 <b>Sebab:</b> " + item.sebab;
+    }
+
+    input.disabled = true;
+
+    document.getElementById("butangSemak").style.display =
+        "none";
+
+    const butang =
+        document.getElementById("butangSeterusnya");
+
+    butang.textContent =
+        indeks === soalan.length - 1
+            ? "LIHAT KEPUTUSAN 🏆"
+            : "CABARAN SETERUSNYA ➡️";
+
+    butang.style.display = "inline-block";
+}
+
+
+// CABARAN SETERUSNYA
+function soalanSeterusnya() {
+    indeks++;
+
+    if (indeks < soalan.length) {
+        paparSoalan();
+    } else {
+        tamatKuiz();
+    }
+}
+
+
+// KEPUTUSAN AKHIR
+function tamatKuiz() {
+    document.getElementById("kuiz").style.display = "none";
+    document.getElementById("keputusan").style.display = "block";
+    document.getElementById("sijil").style.display = "none";
+
+    if (markah === soalan.length) {
+        bunyiKemenangan();
+
+        document.getElementById("paparanKemenangan")
+            .style.display = "block";
+
+        document.getElementById("paparanCubaLagi")
+            .style.display = "none";
+
+        document.getElementById("markahAkhir").textContent =
+            "Markah anda: " + markah + "/" + soalan.length;
+
+        sessionStorage.setItem("markahMisi4", markah);
+
+    } else {
+        document.getElementById("paparanKemenangan")
+            .style.display = "none";
+
+        document.getElementById("paparanCubaLagi")
+            .style.display = "block";
+
+        document.getElementById("markahGagal").textContent =
+            "Markah anda: " + markah + "/" + soalan.length;
+    }
+}
+
+
+// PAPARKAN SIJIL DENGAN NAMA PEMAIN AUTOMATIK
+function lihatSijil() {
+    const namaPemain =
+        sessionStorage.getItem("namaDetektif") || "Detektif";
+
+    document.getElementById("namaSijil").textContent =
+        namaPemain;
+
+    document.getElementById("tarikhSijil").textContent =
+        new Date().toLocaleDateString("ms-MY", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+
+    document.getElementById("paparanKemenangan")
+        .style.display = "none";
+
+    document.getElementById("sijil")
+        .style.display = "block";
+}
+
+
+// KEMBALI KE PAPARAN KEMENANGAN
+    
+function kembaliKeputusan() {
+    window.location.href = "index.html";
+}
+
+
+
+// ULANG CABARAN
+function ulangKuiz() {
+    document.getElementById("keputusan").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+</script>
+
+</body>
+</html>

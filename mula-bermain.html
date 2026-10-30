@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mula Bermain - Misi Detektif Bahasa</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("background-detektif.jpg");
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .kotak {
+            background: rgba(230, 215, 250, 0.90);
+            padding: 35px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px #0002;
+            width: 85%;
+            max-width: 450px;
+        }
+
+        h1 {
+            color: #6943aa;
+        }
+
+        input {
+            width: 85%;
+            padding: 15px;
+            border: 2px solid #b8a1ed;
+            border-radius: 12px;
+            font-size: 17px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        button, a {
+            display: inline-block;
+            background: #8064d8;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 8px;
+        }
+
+        button:hover, a:hover {
+            background: #6243bd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="kotak">
+        <h1>🕵️‍♀️ SELAMAT DATANG, DETEKTIF!</h1>
+        <p>Sedia untuk menyelesaikan Misi Detektif Bahasa?</p>
+
+        <label for="nama">Masukkan nama detektif anda:</label>
+
+        <input type="text" id="nama"
+               placeholder="Contoh: Detektif Ali"
+               maxlength="40">
+
+        <br>
+
+        <button onclick="mulakanMisi()">🔎 MULAKAN MISI</button>
+
+        <br>
+
+        <a href="index.html">🏠 KEMBALI KE MENU UTAMA</a>
+    </div>
+
+    <script>
+        function mulakanMisi() {
+            let nama = document.getElementById("nama").value.trim();
+
+            if (nama === "") {
+                alert("Sila masukkan nama detektif anda dahulu!");
+                return;
+            }
+
+            sessionStorage.setItem("namaDetektif", nama);
+
+            window.location.href = "misi1-ejaan.html";
+        }
+    </script>
+</body>
+</html>

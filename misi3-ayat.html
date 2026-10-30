@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Misi 3: Detektif Ayat</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 30px 15px;
+    background-image: url("background-detektif.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.kotak {
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 30px;
+background: rgba(220, 200, 250, 0.75);
+    border-radius: 20px;
+}
+
+h1 {
+    color: #7048b5;
+    font-size: 34px;
+}
+
+h2, h3 {
+    color: #7048b5;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.nota-item {
+    background: #f7f2ff;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.nota-item h3 {
+    margin-top: 0;
+}
+
+button {
+    background: #8561db;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 20px;
+    margin: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background: #6943c0;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+#kuiz, #keputusan {
+    display: none;
+}
+
+#pilihanPerkataan {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.kad {
+background: #FADDE8;
+color: #6B3050;
+border: 2px solid #E9A8C0;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.kad-susunan {
+    display: inline-block;
+    background: #8561db;
+    color: white;
+    border: 2px solid #8561db;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin: 5px;
+    font-size: 17px;
+}
+
+.ruang-susunan {
+    background: #f3edff;
+    border: 2px dashed #aa8ce7;
+    border-radius: 15px;
+    padding: 20px 12px;
+    margin: 20px 0;
+    min-height: 100px;
+}
+
+.ruang-susunan.betul {
+    background: #e2f8eb;
+    border-color: #26995b;
+}
+
+.ruang-susunan.salah {
+    background: #ffe8e8;
+    border-color: #d9534f;
+}
+
+#maklumBalas {
+    margin: 20px 0;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+#butangSeterusnya {
+    display: none;
+}
+
+#butangMisiSeterusnya,
+#butangCubaLagi {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .kotak {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .kad, .kad-susunan {
+        font-size: 15px;
+    }
+}
+#pilihanPerkataan .kad {
+    background: #FADDE8 !important;
+    color: #6B3050 !important;
+    border: 2px solid #E9A8C0 !important;
+    border-radius: 12px;
+}
+
+#pilihanPerkataan .kad:hover {
+    background: #F8C8DC !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="kotak">
+
+    <h1>🔎 MISI 3: DETEKTIF AYAT</h1>
+
+    <p id="namaMurid"></p>
+
+    <!-- NOTA PEMBELAJARAN -->
+    <div id="nota">
+
+        <h2>📚 Nota Pembelajaran</h2>
+
+        <p>
+            Kesalahan ayat berlaku apabila binaan atau
+            susunan unsur dalam sesuatu ayat tidak
+            mematuhi peraturan tatabahasa bahasa Melayu.
+        </p>
+
+        <div class="nota-item">
+            <h3>1. Kesalahan Susunan Ayat</h3>
+
+            <p>❌ Salah: Membaca buku Aina di perpustakaan.</p>
+
+            <p>✅ Betul: Aina membaca buku di perpustakaan.</p>
+
+            <p>
+                💡 <b>Sebab:</b> Dalam ayat susunan biasa,
+                subjek hadir sebelum predikat.
+            </p>
+        </div>
+
+        <div class="nota-item">
+            <h3>2. Ayat Tidak Lengkap</h3>
+
+            <p>❌ Salah: Sedang bermain di padang.</p>
+
+            <p>✅ Betul: Ali sedang bermain di padang.</p>
+
+            <p>
+                💡 <b>Sebab:</b> Ayat penyata tersebut
+                memerlukan subjek untuk menyampaikan
+                maklumat yang lengkap.
+            </p>
+        </div>
+
+        <div class="nota-item">
+            <h3>3. Kesalahan Susunan Frasa</h3>
+
+            <p>❌ Salah: Merah baju itu.</p>
+
+            <p>✅ Betul: Baju itu merah.</p>
+
+            <p>
+                💡 <b>Sebab:</b> Dalam ayat susunan biasa,
+                frasa nama "Baju itu" menjadi subjek
+                dan kata adjektif "merah" menjadi predikat.
+            </p>
+        </div>
+
+        <button onclick="mulaKuiz()">
+            MULAKAN MISI 🔍
+        </button>
+
+    </div>
+
+    <!-- PERMAINAN -->
+    <div id="kuiz">
+
+        <h2>🧩 Susun Ayat!</h2>
+
+        <p>
+            Klik kad perkataan mengikut susunan yang
+            betul untuk membina ayat yang gramatis.
+        </p>
+
+        <p id="nomborSoalan"></p>
+
+        <h3>🔎 Pilihan Perkataan:</h3>
+
+        <div id="pilihanPerkataan"></div>
+
+        <h3>Ayat yang dibina:</h3>
+
+        <div id="ruangSusunan" class="ruang-susunan">
+
+            <p id="teksPanduan">
+                Klik perkataan untuk menyusun ayat.
+            </p>
+
+            <div id="ayatDisusun"></div>
+
+        </div>
+
+        <button id="butangPadam" onclick="padamSusunan()">
+            ↩️ PADAM PERKATAAN TERAKHIR
+        </button>
+
+        <button id="butangSemak" onclick="semakJawapan()">
+            SEMAK JAWAPAN 🔍
+        </button>
+
+        <div id="maklumBalas" aria-live="polite"></div>
+
+        <button id="butangSeterusnya"
+                onclick="soalanSeterusnya()">
+            SOALAN SETERUSNYA ➡️
+        </button>
+
+    </div>
+
+    <!-- KEPUTUSAN -->
+    <div id="keputusan">
+
+        <h2>🏆 MISI 3 SELESAI!</h2>
+
+        <h3 id="markahAkhir"></h3>
+
+        <p id="mesejAkhir"></p>
+
+        <button id="butangMisiSeterusnya"
+                onclick="window.location.href='misi4-akhir.html'">
+            MISI SETERUSNYA ➡️
+        </button>
+
+        <button id="butangCubaLagi"
+                onclick="ulangKuiz()">
+            🔄 CUBA LAGI
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+// NAMA DETEKTIF
+const nama =
+    sessionStorage.getItem("namaDetektif") || "Detektif";
+
+document.getElementById("namaMurid").textContent =
+    "Selamat datang, " + nama + "!";
+
+
+// DATA LIMA SOALAN
+const soalan = [
+    {
+        perkataan: [
+            "buku",
+            "Aina",
+            "membaca",
+            "di perpustakaan."
+        ],
+        jawapan: [
+            "Aina",
+            "membaca",
+            "buku",
+            "di perpustakaan."
+        ],
+        sebab:
+            "Ayat ini mempunyai subjek 'Aina' dan predikat " +
+            "'membaca buku di perpustakaan'."
+    },
+    {
+        perkataan: [
+            "di padang.",
+            "bermain",
+            "Ali",
+            "bola"
+        ],
+        jawapan: [
+            "Ali",
+            "bermain",
+            "bola",
+            "di padang."
+        ],
+        sebab:
+            "Subjek 'Ali' hadir sebelum predikat " +
+            "'bermain bola di padang'."
+    },
+    {
+        perkataan: [
+            "sangat cantik.",
+            "itu",
+            "Bunga"
+        ],
+        jawapan: [
+            "Bunga",
+            "itu",
+            "sangat cantik."
+        ],
+        sebab:
+            "Frasa nama 'Bunga itu' menjadi subjek, " +
+            "manakala frasa adjektif 'sangat cantik' " +
+            "menjadi predikat."
+    },
+    {
+        perkataan: [
+            "ke sekolah",
+            "setiap pagi.",
+            "Adik",
+            "berjalan"
+        ],
+        jawapan: [
+            "Adik",
+            "berjalan",
+            "ke sekolah",
+            "setiap pagi."
+        ],
+        sebab:
+            "Ayat ini mempunyai subjek 'Adik', diikuti " +
+            "predikat yang menerangkan perbuatan, " +
+            "arah dan masa."
+    },
+    {
+        perkataan: [
+            "di dapur.",
+            "Ibu",
+            "memasak",
+            "nasi"
+        ],
+        jawapan: [
+            "Ibu",
+            "memasak",
+            "nasi",
+            "di dapur."
+        ],
+        sebab:
+            "Subjek 'Ibu' diikuti predikat " +
+            "'memasak nasi di dapur'."
+    }
+];
+
+
+// PEMBOLEH UBAH
+let indeks = 0;
+let markah = 0;
+let susunanMurid = [];
+let sudahJawab = false;
+
+
+// BUNYI JAWAPAN
+function bunyiJawapan(betul) {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+    const oscillator = audio.createOscillator();
+    const volume = audio.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = betul ? 880 : 250;
+
+    oscillator.connect(volume);
+    volume.connect(audio.destination);
+
+    volume.gain.setValueAtTime(
+        0.12,
+        audio.currentTime
+    );
+
+    volume.gain.exponentialRampToValueAtTime(
+        0.001,
+        audio.currentTime + 0.3
+    );
+
+    oscillator.start();
+    oscillator.stop(audio.currentTime + 0.3);
+
+    oscillator.onended = () => audio.close();
+}
+
+
+// BUNYI KEMENANGAN
+function bunyiKemenangan() {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) return;
+
+    const audio = new AudioContextClass();
+
+    [523, 659, 784].forEach((frekuensi, i) => {
+        const oscillator = audio.createOscillator();
+        const volume = audio.createGain();
+
+        const mula = audio.currentTime + i * 0.22;
+        const tamat = mula + 0.3;
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frekuensi;
+
+        oscillator.connect(volume);
+        volume.connect(audio.destination);
+
+        volume.gain.setValueAtTime(0.12, mula);
+        volume.gain.exponentialRampToValueAtTime(
+            0.001,
+            tamat
+        );
+
+        oscillator.start(mula);
+        oscillator.stop(tamat);
+    });
+
+    const penutup = audio.createOscillator();
+    penutup.connect(audio.destination);
+    penutup.onended = () => audio.close();
+
+    penutup.start(audio.currentTime + 0.8);
+    penutup.stop(audio.currentTime + 0.81);
+}
+
+
+// MULAKAN PERMAINAN
+function mulaKuiz() {
+    document.getElementById("nota").style.display = "none";
+    document.getElementById("keputusan").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+
+
+// PAPAR SOALAN
+function paparSoalan() {
+    sudahJawab = false;
+    susunanMurid = [];
+
+    const item = soalan[indeks];
+
+    document.getElementById("nomborSoalan").textContent =
+        "Soalan " + (indeks + 1) +
+        " daripada " + soalan.length;
+
+    document.getElementById("maklumBalas").textContent = "";
+
+    document.getElementById("butangSemak").style.display =
+        "inline-block";
+
+    document.getElementById("butangPadam").style.display =
+        "inline-block";
+
+    document.getElementById("butangSeterusnya").style.display =
+        "none";
+
+    const ruangSusunan =
+        document.getElementById("ruangSusunan");
+
+    ruangSusunan.classList.remove("betul", "salah");
+
+    const pilihan =
+        document.getElementById("pilihanPerkataan");
+
+    pilihan.innerHTML = "";
+
+    item.perkataan.forEach((perkataan, nombor) => {
+        const kad = document.createElement("button");
+
+        kad.className = "kad";
+        kad.textContent = perkataan;
+        kad.dataset.nombor = nombor;
+
+        kad.onclick = function() {
+            tambahPerkataan(nombor);
+        };
+
+        pilihan.appendChild(kad);
+    });
+
+    paparSusunan();
+}
+
+
+// TAMBAH PERKATAAN
+function tambahPerkataan(nombor) {
+    if (sudahJawab) return;
+
+    if (susunanMurid.includes(nombor)) return;
+
+    susunanMurid.push(nombor);
+
+    const kad = document.querySelector(
+        '.kad[data-nombor="' + nombor + '"]'
+    );
+
+    kad.disabled = true;
+
+    paparSusunan();
+}
+
+
+// PAPAR AYAT YANG DISUSUN
+function paparSusunan() {
+    const item = soalan[indeks];
+
+    const ruang =
+        document.getElementById("ayatDisusun");
+
+    ruang.innerHTML = "";
+
+    document.getElementById("teksPanduan").style.display =
+        susunanMurid.length === 0 ? "block" : "none";
+
+    susunanMurid.forEach(nombor => {
+        const kad = document.createElement("span");
+
+        kad.className = "kad-susunan";
+        kad.textContent = item.perkataan[nombor];
+
+        ruang.appendChild(kad);
+    });
+
+    // NOKTAH SUDAH ADA PADA KAD TERAKHIR.
+    // JANGAN TAMBAH NOKTAH AUTOMATIK.
+}
+
+
+// PADAM PERKATAAN TERAKHIR
+function padamSusunan() {
+    if (sudahJawab) return;
+
+    if (susunanMurid.length === 0) return;
+
+    const nombor = susunanMurid.pop();
+
+    const kad = document.querySelector(
+        '.kad[data-nombor="' + nombor + '"]'
+    );
+
+    if (kad) {
+        kad.disabled = false;
+    }
+
+    paparSusunan();
+}
+
+
+// SEMAK JAWAPAN
+function semakJawapan() {
+    if (sudahJawab) return;
+
+    const item = soalan[indeks];
+
+    if (susunanMurid.length !== item.perkataan.length) {
+        document.getElementById("maklumBalas").textContent =
+            "⚠️ Susun semua perkataan dahulu!";
+        return;
+    }
+
+    sudahJawab = true;
+
+    const ayatMurid = susunanMurid.map(
+        nombor => item.perkataan[nombor]
+    );
+
+    // BANDINGKAN SETIAP KAD SECARA TEPAT
+    const betul =
+        ayatMurid.length === item.jawapan.length &&
+        ayatMurid.every(
+            (perkataan, i) =>
+                perkataan === item.jawapan[i]
+        );
+
+    bunyiJawapan(betul);
+
+    const maklumBalas =
+        document.getElementById("maklumBalas");
+
+    const ruang =
+        document.getElementById("ruangSusunan");
+
+    ruang.classList.remove("betul", "salah");
+    ruang.classList.add(betul ? "betul" : "salah");
+
+    if (betul) {
+        markah++;
+
+        maklumBalas.innerHTML =
+            "✅ <b>TAHNIAH! Susunan ayat betul!</b>" +
+            "<br><br>💡 <b>Sebab:</b> " + item.sebab;
+
+    } else {
+        maklumBalas.innerHTML =
+            "❌ <b>Susunan ayat kurang tepat.</b>" +
+            "<br><br>✅ <b>Ayat yang betul:</b> " +
+            item.jawapan.join(" ") +
+            "<br><br>💡 <b>Sebab:</b> " + item.sebab;
+    }
+
+    document.querySelectorAll("#pilihanPerkataan .kad")
+        .forEach(kad => {
+            kad.disabled = true;
+        });
+
+    document.getElementById("butangSemak").style.display =
+        "none";
+
+    document.getElementById("butangPadam").style.display =
+        "none";
+
+    const butang =
+        document.getElementById("butangSeterusnya");
+
+    butang.textContent =
+        indeks === soalan.length - 1
+            ? "LIHAT KEPUTUSAN 🏆"
+            : "SOALAN SETERUSNYA ➡️";
+
+    butang.style.display = "inline-block";
+}
+
+
+// SOALAN SETERUSNYA
+function soalanSeterusnya() {
+    indeks++;
+
+    if (indeks < soalan.length) {
+        paparSoalan();
+    } else {
+        tamatKuiz();
+    }
+}
+
+
+// KEPUTUSAN AKHIR
+function tamatKuiz() {
+    document.getElementById("kuiz").style.display = "none";
+    document.getElementById("keputusan").style.display = "block";
+
+    document.getElementById("markahAkhir").textContent =
+        nama + ", markah anda ialah " +
+        markah + " daripada " + soalan.length + ".";
+
+    const butangSeterusnya =
+        document.getElementById("butangMisiSeterusnya");
+
+    const butangCubaLagi =
+        document.getElementById("butangCubaLagi");
+
+    if (markah === soalan.length) {
+        bunyiKemenangan();
+
+        document.getElementById("mesejAkhir").textContent =
+            "🌟 Tahniah! Semua ayat disusun dengan betul! " +
+            "Anda layak ke Misi 4!";
+
+        butangSeterusnya.style.display = "inline-block";
+        butangCubaLagi.style.display = "none";
+
+        sessionStorage.setItem("markahMisi3", markah);
+
+    } else {
+        document.getElementById("mesejAkhir").textContent =
+            "💪 Cuba lagi! Dapatkan 5/5 untuk " +
+            "membuka misi seterusnya.";
+
+        butangSeterusnya.style.display = "none";
+        butangCubaLagi.style.display = "inline-block";
+    }
+}
+
+
+// ULANG PERMAINAN
+function ulangKuiz() {
+    document.getElementById("keputusan").style.display = "none";
+    document.getElementById("kuiz").style.display = "block";
+
+    indeks = 0;
+    markah = 0;
+
+    paparSoalan();
+}
+</script>
+
+</body>
+</html>
